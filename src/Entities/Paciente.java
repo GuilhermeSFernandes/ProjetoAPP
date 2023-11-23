@@ -10,11 +10,12 @@ public class Paciente {
     private String telefone;
     private String formaPagamento;
 
-    public Paciente(String nome, String foto, Date dataNascimento, String sexo, String endereco, String telefone, String formaPagamento) {
+    public Paciente(int idPaciente, String nome, String foto, Date dataNascimento, String sexo, String endereco, String telefone, String formaPagamento) {
         this.nome = nome;
         this.foto = foto;
         this.dataNascimento = dataNascimento;
         this.sexo = sexo;
+        this.idPaciente = idPaciente;
         this.endereco = endereco;
         this.telefone = telefone;
         this.formaPagamento = formaPagamento;

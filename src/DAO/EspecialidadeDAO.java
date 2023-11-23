@@ -78,5 +78,42 @@ public class EspecialidadeDAO {
             BancoDados.desconectar();
         }
     }
+    public void excluirEspecialidade(int codigoEspecialidade) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement("DELETE FROM especialidade WHERE codigo = ?");
+            st.setInt(1, codigoEspecialidade);
+
+            int linhasAfetadas = st.executeUpdate();
+
+            if (linhasAfetadas == 0) {
+                System.out.println("Especialidade não encontrada ou não pôde ser excluída.");
+            } else {
+                System.out.println("Especialidade excluída com sucesso.");
+            }
+
+        } finally {
+            BancoDados.finalizarStatement(st);
+            BancoDados.desconectar();
+        }
+    }
+    public void atualizarEspecialidade(Especialidade especialidade) throws SQLException {
+        PreparedStatement st = null;
+
+        try {
+            st = conn.prepareStatement("UPDATE especialidade SET nome = ? WHERE codigo = ?");
+            st.setString(1, especialidade.getNomeEspecialidade());
+            st.setInt(2, especialidade.getCodigoEspecialidade());
+
+            st.executeUpdate();
+
+            System.out.println("Especialidade atualizada com sucesso.");
+
+        } finally {
+            BancoDados.finalizarStatement(st);
+            BancoDados.desconectar();
+        }
+    }
 
 }

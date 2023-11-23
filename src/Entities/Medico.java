@@ -15,6 +15,10 @@ public class Medico {
         this.especialidade = especialidade;
     }
 
+    public Medico(String crmMedico) {
+        this.crm = crmMedico;
+    }
+
     public String getCrm() {
         return crm;
     }

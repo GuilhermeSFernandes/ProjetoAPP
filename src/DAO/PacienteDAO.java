@@ -9,9 +9,10 @@ import java.util.List;
 public class PacienteDAO {
     private Connection conn;
 
-    public PacienteDAO(Connection conn){
+    public PacienteDAO(Connection conn) {
         this.conn = conn;
     }
+
     public void cadastrarPaciente(Paciente paciente) throws SQLException {
         PreparedStatement st = null;
         try {
@@ -44,7 +45,7 @@ public class PacienteDAO {
             rs = st.executeQuery();
 
             if (rs.next()) {
-                Paciente paciente = new Paciente(null, null, null, null, null, null, null);
+                Paciente paciente = new Paciente(0, null, null, null, null, null, null, null);
                 paciente.setIdPaciente(rs.getInt("id_paciente"));
                 paciente.setNome(rs.getString("nome"));
                 paciente.setFoto(rs.getString("foto"));
@@ -90,7 +91,7 @@ public class PacienteDAO {
         }
     }
 
-    public void excluirPaciente(int idPaciente) throws SQLException {
+    public int excluirPaciente(int idPaciente) throws SQLException {
         PreparedStatement st = null;
 
         try {
@@ -109,7 +110,9 @@ public class PacienteDAO {
             BancoDados.finalizarStatement(st);
             BancoDados.desconectar();
         }
+        return idPaciente;
     }
+
     public List<Paciente> listarPacientes() throws SQLException {
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -121,7 +124,7 @@ public class PacienteDAO {
             List<Paciente> listaPacientes = new ArrayList<>();
 
             while (rs.next()) {
-                Paciente paciente = new Paciente(null,null,null,null,null,null,null);
+                Paciente paciente = new Paciente(0, null, null, null, null, null, null, null);
                 paciente.setIdPaciente(rs.getInt("id_paciente"));
                 paciente.setNome(rs.getString("nome"));
                 paciente.setFoto(rs.getString("foto"));
@@ -143,4 +146,35 @@ public class PacienteDAO {
         }
     }
 
+    public List<Paciente> buscarTodos() throws SQLException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            st = conn.prepareStatement("SELECT * FROM paciente");
+            rs = st.executeQuery();
+
+            List<Paciente> listaPacientes = new ArrayList<>();
+
+            while (rs.next()) {
+                Paciente paciente = new Paciente(0,null,null,null,null,null,null,null);
+                paciente.setIdPaciente(rs.getInt("codigo"));
+                paciente.setNome(rs.getString("nome"));
+                paciente.setSexo(rs.getString("genero"));
+                paciente.setDataNascimento(rs.getDate("data_nascimento"));
+                paciente.setEndereco(rs.getString("endereco"));
+                paciente.setTelefone(rs.getString("telefone"));
+                paciente.setFormaPagamento(rs.getString("forma_pagamento"));
+
+                listaPacientes.add(paciente);
+            }
+
+            return listaPacientes;
+
+        } finally {
+            BancoDados.finalizarStatement(st);
+            BancoDados.finalizarResultSet(rs);
+            BancoDados.desconectar();
+        }
+    }
 }

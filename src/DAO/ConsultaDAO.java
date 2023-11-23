@@ -39,7 +39,7 @@ public class ConsultaDAO {
     }
 
     // Método auxiliar para buscar o ID do paciente com base no nome
-    private int buscarPacienteIDPorNome(String nomePaciente) throws SQLException {
+    public int buscarPacienteIDPorNome(String nomePaciente) throws SQLException {
         int pacienteID = -1; // Valor padrão se não encontrar
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -62,7 +62,7 @@ public class ConsultaDAO {
     }
 
 
-    private String buscarMedicoCRMPorNome(String nomeMedico) throws SQLException {
+    public String buscarMedicoCRMPorNome(String nomeMedico) throws SQLException {
         String crmMedico = null;
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -190,7 +190,7 @@ public class ConsultaDAO {
         }
     }
 
-    private boolean consultaExiste(int idConsulta) throws SQLException {
+    public boolean consultaExiste(int idConsulta) throws SQLException {
         PreparedStatement st = null;
 
         try {
